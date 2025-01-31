@@ -1,0 +1,70 @@
+﻿@page "/"
+@implements IFramePresenter
+@rendermode InteractiveServer
+
+<PageTitle>NetAF</PageTitle>
+
+<div>
+    @((MarkupString)frameAsHtml)
+</div>
+
+<br />
+
+@if (showInput)
+{
+    <input type="text" @ref="textInput" @bind="text" @onkeyup="HandleInput" />
+}
+
+@if (showAcknowledge)
+{
+    <button class="btn btn-primary" @ref="acknowledgeButton" @onclick="Acknowledge">OK</button>
+}
+
+@code {
+    private string frameAsHtml = string.Empty;
+    private HtmlAdapter? htmlAdapter;
+    private string text = string.Empty;
+    private bool showInput = false;
+    private bool showAcknowledge = false;
+    private ElementReference acknowledgeButton;
+    private ElementReference textInput;
+
+    private void Acknowledge()
+    {
+        htmlAdapter?.AcknowledgeReceived();
+    }
+
+    private void HandleInput(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" && !string.IsNullOrWhiteSpace(text))
+        {
+            htmlAdapter?.InputReceived(text);
+            text = string.Empty;
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        Task.Run(() =>
+        {
+            htmlAdapter = new HtmlAdapter(this);
+            var configuration = new HtmlGameConfiguration(htmlAdapter, ExitMode.ReturnToTitleScreen);
+            Game.Execute(ExampleGame.Create(configuration));
+        });
+    }
+
+    public async void Present(string frame)
+    {
+        frameAsHtml = frame;
+        showInput = htmlAdapter?.Game?.Mode?.Type == Logic.Modes.GameModeType.Interactive;
+        showAcknowledge = htmlAdapter?.Game?.Mode?.Type == Logic.Modes.GameModeType.Information;
+
+        await InvokeAsync(StateHasChanged);
+
+        if (showInput && textInput.Context != null)
+            await textInput.FocusAsync();
+
+        if (showAcknowledge && acknowledgeButton.Context != null)
+            await acknowledgeButton.FocusAsync();
+    }
+}
