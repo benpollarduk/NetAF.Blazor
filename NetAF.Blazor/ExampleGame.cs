@@ -1,4 +1,6 @@
-﻿using NetAF.Assets.Characters;
+﻿using NetAF.Assets;
+using NetAF.Assets.Characters;
+using NetAF.Assets.Locations;
 using NetAF.Logic;
 using NetAF.Logic.Callbacks;
 using NetAF.Logic.Configuration;
@@ -14,7 +16,10 @@ namespace NetAF.Blazor
 
             RegionMaker regionMaker = new("Mountain", "An imposing volcano just East of town.")
             {
-                [0, 0, 0] = new("Cavern", "A dark cavern set in to the base of the mountain.")
+                [1, 0, 0] = new("Cavern", "A dark cavern set in to the base of the mountain.", [new Exit(Direction.North)], [new Item("Torch", "A wooden torch", true)]),
+                [1, 1, 0] = new("Outside", "Outside the dark cavern.", [new Exit(Direction.South), new Exit(Direction.East), new Exit(Direction.West)]),
+                [0, 1, 0] = new("Ledge", "A ledge, overlooking the town.", [new Exit(Direction.East)]),
+                [2, 1, 0] = new("Field", "A field.", [new Exit(Direction.West)])
             };
 
             OverworldMaker overworldMaker = new("Daves World", "An ancient kingdom.", regionMaker);
