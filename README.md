@@ -1,10 +1,31 @@
 # NetAF.Blazor
-A Blazor implementation of NetAF.
+A Blazor implementation of [NetAF](http://www.github.com/benpollarduk/netaf). This repo demonstrates how NetAF can be used in a Blazor app by making use of the various classes in NetAF.Targets.Html.  
 
-## Hello World
-The following provides a basic interface to allow interaction with a NetAF game.
+## Getting Started
 
-```csharp
+### Running the Example
+Getting started running NetAF in Blazor is easy!
+
+* Clone the repo
+* Build and run NetAF.Blazor
+* The app will be served at https://localhost:7295/. Navigate to https://localhost:7295/ in your broswer to start the game.
+
+![image](https://github.com/user-attachments/assets/c2d482f4-6137-4f7f-80be-a6ef839fd973)
+
+### How it Works
+The Blazor app has a [home page](NetAF.Blazor/Components/Pages/Home.razor) that provides a web page for interacting with the game. NetAF provides frame builders to generate the HTML for your game, which is then displayed directly in the page using:
+```
+<div>
+    @((MarkupString)frameAsHtml)
+</div>
+```
+The page razor page itself is an implementation of *IFramePresenter*, when an update happens in the game that requires a refresh the *Present* method is called, which provides the HTML content.
+
+Otherwise the page displays a simple acknowledge button and a input box that allow the user to interact with the game. Based on the running games current mode these elements are either visible or hidden.
+
+The game itself is executed as a background task.
+
+```
 @page "/"
 @implements IFramePresenter
 @rendermode InteractiveServer
@@ -76,38 +97,11 @@ The following provides a basic interface to allow interaction with a NetAF game.
     }
 }
 ```
+### Example Game
+The [ExampleGame](NetAF.Blazor/ExampleGame.cs) is included in the repo.
 
-The example game:
+## Documentation
+Please visit [https://benpollarduk.github.io/NetAF-docs/](https://benpollarduk.github.io/NetAF-docs/) to view the NetAF documentation.
 
-```csharp
-using NetAF.Assets.Characters;
-using NetAF.Logic;
-using NetAF.Logic.Callbacks;
-using NetAF.Logic.Configuration;
-using NetAF.Utilities;
-
-namespace NetAF.Blazor
-{
-    internal class ExampleGame
-    {
-        internal static GameCreationCallback Create(IGameConfiguration configuration)
-        {
-            PlayableCharacter player = new("Dave", "A young boy on a quest to find the meaning of life.");
-
-            RegionMaker regionMaker = new("Mountain", "An imposing volcano just East of town.")
-            {
-                [0, 0, 0] = new("Cavern", "A dark cavern set in to the base of the mountain.")
-            };
-
-            OverworldMaker overworldMaker = new("Daves World", "An ancient kingdom.", regionMaker);
-
-            return Game.Create(
-                new("The Life of Dave", "A very low budget adventure.", "Ben Pollard"),
-                "Dave awakes to find himself in a cavern...",
-                AssetGenerator.Retained(overworldMaker.Make(), player),
-                GameEndConditions.NoEnd,
-                configuration);
-        }
-    }
-}
-```
+## For Open Questions
+Visit https://github.com/benpollarduk/NetAF.Blazor/issues
