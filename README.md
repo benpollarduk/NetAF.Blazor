@@ -27,6 +27,9 @@ The game itself is executed as a background task.
 
 ```
 @page "/"
+@using NetAF.Logic.Configuration
+@using NetAF.Logic.Modes
+@using NetAF.Rendering.FrameBuilders
 @implements IFramePresenter
 @rendermode InteractiveServer
 
@@ -76,7 +79,7 @@ The game itself is executed as a background task.
         Task.Run(() =>
         {
             htmlAdapter = new HtmlAdapter(this);
-            var configuration = new HtmlGameConfiguration(htmlAdapter, ExitMode.ReturnToTitleScreen);
+            GameConfiguration configuration = new(htmlAdapter, FrameBuilderCollections.Html, new(80, 50));
             Game.Execute(ExampleGame.Create(configuration));
         });
     }
@@ -84,8 +87,8 @@ The game itself is executed as a background task.
     public async void Present(string frame)
     {
         frameAsHtml = frame;
-        showInput = htmlAdapter?.Game?.Mode?.Type == Logic.Modes.GameModeType.Interactive;
-        showAcknowledge = htmlAdapter?.Game?.Mode?.Type == Logic.Modes.GameModeType.Information;
+        showInput = htmlAdapter?.Game?.Mode?.Type == GameModeType.Interactive;
+        showAcknowledge = htmlAdapter?.Game?.Mode?.Type == GameModeType.Information;
 
         await InvokeAsync(StateHasChanged);
 
