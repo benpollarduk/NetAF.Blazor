@@ -6,22 +6,22 @@ A Blazor implementation of [NetAF](http://www.github.com/benpollarduk/netaf). Th
 ### Running the Example
 Getting started running NetAF in Blazor is easy!
 
-* Clone the repo
-* Build and run NetAF.Blazor
+* Clone the repo.
+* Build and run NetAF.Blazor.
 * The app will be served at https://localhost:7295/. Navigate to https://localhost:7295/ in your broswer to start the game.
 
 ![image](https://github.com/user-attachments/assets/c2d482f4-6137-4f7f-80be-a6ef839fd973)
 
 ### How it Works
-The Blazor app has a [home page](NetAF.Blazor/Components/Pages/Home.razor) that provides a web page for interacting with the game. NetAF provides frame builders to generate the HTML for your game, which is then displayed directly in the page using:
+The Blazor app provides a single [page](NetAF.Blazor/Components/Pages/Home.razor) for rendering and interacting with the game. NetAF provides frame builders to generate the HTML for your game, which is then displayed directly in the page using:
 ```
 <div>
     @((MarkupString)frameAsHtml)
 </div>
 ```
-The page razor page itself is an implementation of *IFramePresenter*, when an update happens in the game that requires a refresh the *Present* method is called, which provides the HTML content.
+The page itself is an implementation of *IFramePresenter*, when an update occurs in the game the *Present* method is called, which allows the page to receive the generated HTML content.
 
-Otherwise the page displays a simple acknowledge button and a input box that allow the user to interact with the game. Based on the running games current mode these elements are either visible or hidden.
+Besides the generated content the page displays a simple acknowledge button and a input box that allow the user to interact with the game. Based on the games current mode these elements are either visible or hidden.
 
 The game itself is executed as a background task.
 
