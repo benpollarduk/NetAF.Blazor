@@ -31,7 +31,7 @@ The game itself is executed as a background task.
 @using NetAF.Logic.Modes
 @using NetAF.Rendering.FrameBuilders
 @implements IFramePresenter
-@rendermode InteractiveServer
+@rendermode @(new InteractiveServerRenderMode(prerender:false))
 
 <PageTitle>NetAF</PageTitle>
 
@@ -52,8 +52,8 @@ The game itself is executed as a background task.
 }
 
 @code {
-    private string frameAsHtml = string.Empty;
     private HtmlAdapter? htmlAdapter;
+    private string frameAsHtml = string.Empty;
     private string text = string.Empty;
     private bool showInput = false;
     private bool showAcknowledge = false;
@@ -63,6 +63,7 @@ The game itself is executed as a background task.
     private void Acknowledge()
     {
         htmlAdapter?.AcknowledgeReceived();
+        GameExecutor.Update();
     }
 
     private void HandleInput(KeyboardEventArgs e)
@@ -70,18 +71,20 @@ The game itself is executed as a background task.
         if (e.Key == "Enter" && !string.IsNullOrWhiteSpace(text))
         {
             htmlAdapter?.InputReceived(text);
+            GameExecutor.Update(text);
+
             text = string.Empty;
         }
     }
 
     protected override void OnInitialized()
     {
-        Task.Run(() =>
-        {
-            htmlAdapter = new HtmlAdapter(this);
-            GameConfiguration configuration = new(htmlAdapter, FrameBuilderCollections.Html, new(80, 50));
-            Game.Execute(ExampleGame.Create(configuration));
-        });
+        if (GameExecutor.IsExecuting)
+            return;
+
+        htmlAdapter = new HtmlAdapter(this);
+        GameConfiguration configuration = new(htmlAdapter, FrameBuilderCollections.Html, new(80, 50));
+        GameExecutor.Execute(ExampleGame.Create(configuration), GameExecutionMode.Manual);
     }
 
     public async void Present(string frame)
