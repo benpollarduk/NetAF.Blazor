@@ -63,7 +63,6 @@ The game itself is executed as a background task.
     private void Acknowledge()
     {
         htmlAdapter?.AcknowledgeReceived();
-        GameExecutor.Update();
     }
 
     private void HandleInput(KeyboardEventArgs e)
@@ -71,7 +70,6 @@ The game itself is executed as a background task.
         if (e.Key == "Enter" && !string.IsNullOrWhiteSpace(text))
         {
             htmlAdapter?.InputReceived(text);
-            GameExecutor.Update(text);
 
             text = string.Empty;
         }
@@ -84,7 +82,7 @@ The game itself is executed as a background task.
 
         htmlAdapter = new HtmlAdapter(this);
         GameConfiguration configuration = new(htmlAdapter, FrameBuilderCollections.Html, new(80, 50));
-        GameExecutor.Execute(ExampleGame.Create(configuration), GameExecutionMode.Manual);
+        GameExecutor.Execute(ExampleGame.Create(configuration), GameExecutionMode.BackgroundAutomatic);
     }
 
     public async void Present(string frame)
