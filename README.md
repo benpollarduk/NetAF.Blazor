@@ -101,6 +101,11 @@ The game itself is executed as a background task.
     }
 }
 ```
+
+### Running as a Standalone Web App
+This example uses a Blazor web app, but NetAF can also be executed in a Blazor standalone web app, which allows it to be hosted as a static web page, for example on Github Pages or other free static web site hosting services. For an example of this please see [this](https://github.com/benpollarduk/SSHammerhead) repo.
+
+
 ### Example Game
 The [ExampleGame](NetAF.Blazor/ExampleGame.cs) is included in the repo.
 
