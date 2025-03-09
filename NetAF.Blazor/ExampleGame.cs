@@ -21,7 +21,7 @@ namespace NetAF.Blazor
                 [2, 1, 0] = new("Field", "A field.", [new Exit(Direction.West)])
             };
 
-            OverworldMaker overworldMaker = new("Daves World", "An ancient kingdom.", regionMaker);
+            OverworldMaker overworldMaker = new("Dave's World", "An ancient kingdom.", regionMaker);
 
             return Game.Create(
                 new("The Life of Dave", "A very low budget adventure.", "Ben Pollard"),
