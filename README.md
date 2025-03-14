@@ -59,6 +59,20 @@ The game itself is executed as a background task.
     private ElementReference acknowledgeButton;
     private ElementReference textInput;
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        if (GameExecutor.IsExecuting)
+            GameExecutor.CancelExecution();
+
+        htmlAdapter = new HtmlAdapter(this);
+        GameConfiguration configuration = new(htmlAdapter, FrameBuilderCollections.Html, new(80, 50));
+        GameExecutor.Execute(ExampleGame.Create(configuration));
+        await InvokeAsync(StateHasChanged);
+    }
+
     private void Acknowledge()
     {
         GameExecutor.Update();
@@ -71,16 +85,6 @@ The game itself is executed as a background task.
             GameExecutor.Update(text);
             text = string.Empty;
         }
-    }
-
-    protected override void OnInitialized()
-    {
-        if (GameExecutor.IsExecuting)
-            return;
-
-        htmlAdapter = new HtmlAdapter(this);
-        GameConfiguration configuration = new(htmlAdapter, FrameBuilderCollections.Html, new(80, 50));
-        GameExecutor.Execute(ExampleGame.Create(configuration));
     }
 
     public async void Present(string frame)
