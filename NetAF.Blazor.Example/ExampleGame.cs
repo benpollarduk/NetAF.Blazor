@@ -5,7 +5,7 @@ using NetAF.Logic;
 using NetAF.Logic.Callbacks;
 using NetAF.Utilities;
 
-namespace NetAF.Blazor
+namespace NetAF.Blazor.Example
 {
     internal class ExampleGame
     {

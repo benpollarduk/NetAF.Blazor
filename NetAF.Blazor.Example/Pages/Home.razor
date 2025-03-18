@@ -1,22 +1,4 @@
-# NetAF.Blazor
-A library of Blazor components for [NetAF](http://www.github.com/benpollarduk/netaf).
-
-## Getting Started
-
-### Running the Example
-Getting started running NetAF in Blazor is easy!
-
-* Clone the repo.
-* Build and run NetAF.Blazor.Example.
-* The app will be served at https://localhost:7295/. Navigate to https://localhost:7295/ in your browser to start the game.
-
-![image](https://github.com/user-attachments/assets/c2d482f4-6137-4f7f-80be-a6ef839fd973)
-
-### How it Works
-Simply add the **GameComponent** to your page and then set up and start a game.
-
-```
-@page "/"
+﻿@page "/"
 @using NetAF.Assets
 @using NetAF.Blazor.Components
 @using NetAF.Rendering.FrameBuilders
@@ -62,12 +44,3 @@ Simply add the **GameComponent** to your page and then set up and start a game.
         await InvokeAsync(StateHasChanged);
     }
 }
-```
-### Example Game
-The [ExampleGame](NetAF.Blazor.Example/ExampleGame.cs) is included in the repo.
-
-## Documentation
-Please visit [https://benpollarduk.github.io/NetAF-docs/](https://benpollarduk.github.io/NetAF-docs/) to view the NetAF documentation.
-
-## For Open Questions
-Visit https://github.com/benpollarduk/NetAF.Blazor/issues

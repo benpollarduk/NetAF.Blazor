@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.JSInterop
+@using NetAF.Blazor.Classes
+@using NetAF.Logic.Modes
+@using NetAF.Persistence
+@using NetAF.Persistence.Json
+@inject IJSRuntime JSRuntime
+
+<div style="display: flex; align-items: center; @(!show ? "display: none;" : "")">
+    <span class="span-primary" style="margin-right: 10px; margin-top: 10px;">Restore point:</span>
+    <button class="btn btn-primary" style="margin-right: 10px; margin-top: 10px;" @onclick="DownloadRestorePoint">Create</button>
+    <InputFile class="inputfile-primary" style="margin-right: 10px; margin-top: 10px;" OnChange="@UploadRestorePoint" />
+</div>
+
+<script>
+    window.saveAsFile = (filename, json) => {
+        const link = document.createElement('a');
+        link.href = `data:application/json,${json}`;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+    window.showMessageBox = (message) => {
+        alert(message);
+    };
+</script>

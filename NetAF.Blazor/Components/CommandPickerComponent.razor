@@ -1,0 +1,13 @@
+﻿@using NetAF.Commands
+
+<div class="command-button-container">
+    @if (selectedCommand != null)
+    {
+        <span class="span-primary">@(selectedCommand.Command): </span>
+    }
+
+    @foreach (var button in buttons)
+    {
+        <button class="@button.CssClass" style="@button.Style" @onclick="button.OnClick">@button.Text</button>
+    }
+</div>
