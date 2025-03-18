@@ -10,6 +10,11 @@ A library of Blazor components for [NetAF](http://www.github.com/benpollarduk/ne
 [![GitHub release](https://img.shields.io/github/release/benpollarduk/NetAF.Blazor.svg)](https://github.com/benpollarduk/NetAF.Blazor/releases)
 [![NuGet](https://img.shields.io/nuget/v/netaf.blazor.svg)](https://www.nuget.org/packages/netaf.blazor/)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/netaf.blazor)](https://www.nuget.org/packages/netaf.blazor/)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=benpollarduk_NetAF.Blazor&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=benpollarduk_NetAF.Blazor)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=benpollarduk_NetAF.Blazor&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=benpollarduk_NetAF.Blazor)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=benpollarduk_NetAF.Blazor&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=benpollarduk_NetAF.Blazor)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=benpollarduk_NetAF.Blazor&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=benpollarduk_NetAF.Blazor)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=benpollarduk_NetAF.Blazor&metric=bugs)](https://sonarcloud.io/summary/new_code?id=benpollarduk_NetAF.Blazor)
 [![License](https://img.shields.io/github/license/benpollarduk/NetAF.Blazor.svg)](https://opensource.org/licenses/MIT)
 
 </div>
