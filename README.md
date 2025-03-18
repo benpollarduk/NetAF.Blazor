@@ -1,5 +1,18 @@
+<div align="center">
+
 # NetAF.Blazor
+
 A library of Blazor components for [NetAF](http://www.github.com/benpollarduk/netaf).
+
+![icon](.nuget/Icon.bmp)
+
+[![main-ci](https://github.com/benpollarduk/NetAF.Blazor/actions/workflows/main-ci.yml/badge.svg)](https://github.com/benpollarduk/NetAF.Blazor/actions/workflows/main-ci.yml)
+[![GitHub release](https://img.shields.io/github/release/benpollarduk/NetAF.Blazor.svg)](https://github.com/benpollarduk/NetAF.Blazor/releases)
+[![NuGet](https://img.shields.io/nuget/v/netaf.blazor.svg)](https://www.nuget.org/packages/netaf.blazor/)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/netaf.blazor)](https://www.nuget.org/packages/netaf.blazor/)
+[![License](https://img.shields.io/github/license/benpollarduk/NetAF.Blazor.svg)](https://opensource.org/licenses/MIT)
+
+</div>
 
 ## Getting Started
 
