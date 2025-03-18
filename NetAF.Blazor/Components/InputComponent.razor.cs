@@ -5,6 +5,8 @@ using NetAF.Blazor.Classes;
 using NetAF.Logic;
 using NetAF.Logic.Modes;
 using NetAF.Targets.Html;
+using System;
+using System.Linq;
 
 namespace NetAF.Blazor.Components
 {

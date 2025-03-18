@@ -4,6 +4,8 @@ using NetAF.Blazor.Classes;
 using NetAF.Commands;
 using NetAF.Logic;
 using NetAF.Targets.Html;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NetAF.Blazor.Components
 {
@@ -84,7 +86,7 @@ namespace NetAF.Blazor.Components
         /// <summary>
         /// Update the displayed prompts.
         /// </summary>
-        /// <param name="commands">The prompts to display.</param>
+        /// <param name="prompts">The prompts to display.</param>
         public async void UpdatePrompts(Prompt[] prompts)
         {
             buttons.Clear();

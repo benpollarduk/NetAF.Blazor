@@ -7,6 +7,9 @@ using NetAF.Logic.Modes;
 using NetAF.Persistence;
 using NetAF.Persistence.Json;
 using NetAF.Targets.Html;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace NetAF.Blazor.Components
 {
