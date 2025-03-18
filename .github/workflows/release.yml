@@ -43,7 +43,7 @@ jobs:
         # update the .csproj file with the input version
         sed -i "s/<Version>.*<\/Version>/<Version>${{ inputs.ver }}<\/Version>/" NetAF.Blazor/NetAF.Blazor.csproj
         sed -i "s/<AssemblyVersion>.*<\/AssemblyVersion>/<AssemblyVersion>${{ inputs.ver }}.0<\/AssemblyVersion>/" NetAF.Blazor/NetAF.Blazor.csproj
-        sed -i "s/<FileVersion>.*<\/FileVersion>/<FileVersion>${{ inputs.ver }}<\/FileVersion>/" NetAF/NetAF.csproj
+        sed -i "s/<FileVersion>.*<\/FileVersion>/<FileVersion>${{ inputs.ver }}<\/FileVersion>/" NetAF.Blazor/NetAF.Blazor.csproj
 
         # update the .csproj file with the release notes
         sed -i "s/<PackageReleaseNotes>.*<\/PackageReleaseNotes>/<PackageReleaseNotes>${{ inputs.release-notes }}<\/PackageReleaseNotes>/" NetAF.Blazor/NetAF.Blazor.csproj
