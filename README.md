@@ -17,6 +17,8 @@ A library of Blazor components for [NetAF](http://www.github.com/benpollarduk/ne
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=benpollarduk_NetAF.Blazor&metric=bugs)](https://sonarcloud.io/summary/new_code?id=benpollarduk_NetAF.Blazor)
 [![License](https://img.shields.io/github/license/benpollarduk/NetAF.Blazor.svg)](https://opensource.org/licenses/MIT)
 
+[![Try Now](https://img.shields.io/badge/Try-Now-brightgreen?style=for-the-badge)](https://benpollarduk.github.io/NetAF/)
+
 </div>
 
 ## Getting Started
