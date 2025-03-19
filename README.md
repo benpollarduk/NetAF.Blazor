@@ -22,7 +22,7 @@ A library of Blazor components for [NetAF](http://www.github.com/benpollarduk/ne
 ## Getting Started
 
 ### Running the Example
-Getting started running [NetAF](https://benpollarduk.github.io/NetAF/) in Blazor is easy!
+Getting started running [NetAF](https://github.com/benpollarduk/NetAF/) in Blazor is easy!
 
 * Clone the repo.
 * Build and run NetAF.Blazor.Example.
