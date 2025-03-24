@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -33,7 +33,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.1" />
-    <PackageReference Include="NetAF" Version="3.2.15" />
+    <PackageReference Include="NetAF" Version="3.3.0" />
   </ItemGroup>
     
   <ItemGroup>
