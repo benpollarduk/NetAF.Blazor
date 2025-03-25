@@ -33,7 +33,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.1" />
-    <PackageReference Include="NetAF" Version="3.3.0" />
+    <PackageReference Include="NetAF" Version="3.3.2" />
   </ItemGroup>
     
   <ItemGroup>

@@ -26,33 +26,20 @@ namespace NetAF.Blazor.Components
         #region Properties
 
         /// <summary>
-        /// Get or set all colors to use for categories. Only categories included in this dictionary will be displayed.
+        /// Get or set settings to use for categories.
         /// </summary>
-        public Dictionary<CommandCategory, string> CommandCategoryColors = new Dictionary<CommandCategory, string>()
+        public Dictionary<CommandCategory, CommandCategorySettings> CommandCategorySettings = new Dictionary<CommandCategory, CommandCategorySettings>()
         {
-            { CommandCategory.Frame, "crimson" },
-            { CommandCategory.Scene, "seagreen" },
-            { CommandCategory.Movement, "navy" },
-            { CommandCategory.Custom, "seagreen" },
-            { CommandCategory.Conversation, "seagreen" },
-            { CommandCategory.Uncategorized, "seagreen" },
-            { CommandCategory.Global, "crimson" },
-            { CommandCategory.RegionMap, "navy" },
-            { CommandCategory.Information, "crimson" }
+            { CommandCategory.Global, new(true, "crimson", 0) },
+            { CommandCategory.Information, new(true, "crimson", 1) },
+            { CommandCategory.Frame, new(true, "crimson", 2) },
+            { CommandCategory.Movement, new(true, "navy", 3) },
+            { CommandCategory.RegionMap, new(true, "navy", 4) },
+            { CommandCategory.Scene, new(true, "seagreen", 5) },
+            { CommandCategory.Conversation, new(true, "seagreen", 6) },
+            { CommandCategory.Custom, new(true, "seagreen", 7) },
+            { CommandCategory.Uncategorized, new(true, "seagreen", 8) },
         };
-
-        #endregion
-
-        #region Records
-
-        /// <summary>
-        /// Provides a template for a button.
-        /// </summary>
-        /// <param name="Text">The text to display on the button.</param>
-        /// <param name="CssClass">The CSS class.</param>
-        /// <param name="Style">Styling to apply to the button.</param>
-        /// <param name="OnClick">A callback to invoke when the button is clicked.</param>
-        private record ButtonTemplate(string Text, string CssClass, string Style, EventCallback OnClick);
 
         #endregion
 
@@ -72,13 +59,27 @@ namespace NetAF.Blazor.Components
         /// <param name="commands">The commands to display.</param>
         public async void UpdateCommands(CommandHelp[] commands)
         {
+            Clear();
+
+            if (CommandCategorySettings == null)
+                return;
+
             selectedCommand = null;
             this.commands = commands.OrderBy(x => x.Command).ToArray();
 
-            Clear();
+            Dictionary<CommandCategory, List<CommandHelp>> organisedCommands = [];
 
-            foreach (var command in commands.Where(x => CommandCategoryColors.ContainsKey(x.Category)))
-                buttons.Add(new ButtonTemplate(command.Command, "btn btn-primary", $"background: {CommandCategoryColors[command.Category]};", EventCallback.Factory.Create(this, () => CommandButtonClicked(command))));
+            foreach (var command in commands.Where(x => CommandCategorySettings.ContainsKey(x.Category) && CommandCategorySettings[x.Category].Show))
+            {
+                if (!organisedCommands.ContainsKey(command.Category))
+                    organisedCommands.Add(command.Category, new List<CommandHelp>());
+
+                organisedCommands[command.Category].Add(command);
+            }
+
+            foreach (var category in organisedCommands.Keys.OrderBy(x => CommandCategorySettings[x].Order))
+                foreach (var command in organisedCommands[category].OrderBy(x => x.Command))
+                    buttons.Add(new ButtonTemplate(command.Command, "btn btn-primary", $"background: {CommandCategorySettings[command.Category].HtmlColor};", EventCallback.Factory.Create(this, () => CommandButtonClicked(command))));
 
             await InvokeAsync(StateHasChanged);
         }
