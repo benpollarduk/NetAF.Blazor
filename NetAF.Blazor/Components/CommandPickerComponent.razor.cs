@@ -65,7 +65,7 @@ namespace NetAF.Blazor.Components
                 return;
 
             selectedCommand = null;
-            this.commands = commands.OrderBy(x => x.Command).ToArray();
+            this.commands = commands;
 
             Dictionary<CommandCategory, List<CommandHelp>> organisedCommands = [];
 
