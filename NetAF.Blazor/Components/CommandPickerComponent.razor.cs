@@ -99,6 +99,10 @@ namespace NetAF.Blazor.Components
             await InvokeAsync(StateHasChanged);
         }
 
+        #endregion
+
+        #region EventHandlers
+        
         private void PromptButtonClicked(string prompt)
         {
             GameExecutor.Update($"{(selectedCommand?.Command ?? string.Empty)} {prompt}");
@@ -110,11 +114,7 @@ namespace NetAF.Blazor.Components
             selectedCommand = null;
             UpdateCommands(commands);
         }
-
-        #endregion
-
-        #region EventHandlers
-
+        
         private void CommandButtonClicked(CommandHelp commandHelp)
         {
             var prompts = htmlAdapter?.Game?.GetPromptsForCommand(commandHelp);
