@@ -38,21 +38,7 @@ namespace NetAF.Blazor.Components
         #endregion
 
         #region Methods
-
-        private void Acknowledge()
-        {
-            GameExecutor.Update();
-        }
-
-        private void HandleInput(KeyboardEventArgs e)
-        {
-            if (e.Key == "Enter" && !string.IsNullOrWhiteSpace(text))
-            {
-                GameExecutor.Update(text);
-                text = string.Empty;
-            }
-        }
-
+        
         private async void UpdateInputMode()
         {
             showInput = (htmlAdapter?.Game?.Mode?.Type == GameModeType.Interactive) && (selectedInputMode == InputMode.Text);
@@ -88,6 +74,20 @@ namespace NetAF.Blazor.Components
         #endregion
 
         #region EventHandlers
+
+        private void Acknowledge()
+        {
+            GameExecutor.Update();
+        }
+
+        private void HandleInput(KeyboardEventArgs e)
+        {
+            if (e.Key == "Enter" && !string.IsNullOrWhiteSpace(text))
+            {
+                GameExecutor.Update(text);
+                text = string.Empty;
+            }
+        }
 
         private void OnChange(ChangeEventArgs args)
         {
