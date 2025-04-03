@@ -54,7 +54,6 @@ namespace NetAF.Blazor.Components
         internal async void Update()
         {
             UpdateInputMode();
-            CommandPickerComponent?.Clear();
 
             await InvokeAsync(StateHasChanged);
 

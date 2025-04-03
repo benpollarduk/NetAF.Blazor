@@ -6,6 +6,7 @@ using NetAF.Logic;
 using NetAF.Targets.Html;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace NetAF.Blazor.Components
 {
@@ -19,7 +20,7 @@ namespace NetAF.Blazor.Components
         private List<ButtonTemplate> buttons = new List<ButtonTemplate>();
         private HtmlAdapter htmlAdapter;
         private CommandHelp selectedCommand;
-        private CommandHelp[] commands = [];
+        private Dictionary<CommandCategory, List<CommandHelp>> categorisedCommands = [];
 
         #endregion
 
@@ -45,13 +46,15 @@ namespace NetAF.Blazor.Components
 
         #region Methods
 
-        /// <summary>
-        /// Clear all buttons.
-        /// </summary>
-        public void Clear()
+        private async Task CreateCommandButtons()
         {
-            buttons.Clear();
+            foreach (var category in categorisedCommands.Keys.OrderBy(x => CommandCategorySettings[x].Order))
+                foreach (var command in categorisedCommands[category].OrderBy(x => x.Command))
+                    buttons.Add(new ButtonTemplate(command.Command, "btn btn-primary", $"background: {CommandCategorySettings[command.Category].HtmlColor};", EventCallback.Factory.Create(this, () => CommandButtonClicked(command))));
+
+            await InvokeAsync(StateHasChanged);
         }
+
 
         /// <summary>
         /// Update the displayed commands.
@@ -59,29 +62,23 @@ namespace NetAF.Blazor.Components
         /// <param name="commands">The commands to display.</param>
         public async void UpdateCommands(CommandHelp[] commands)
         {
-            Clear();
+            buttons.Clear();
+            categorisedCommands.Clear();
 
             if (CommandCategorySettings == null)
                 return;
 
             selectedCommand = null;
-            this.commands = commands;
-
-            Dictionary<CommandCategory, List<CommandHelp>> organisedCommands = [];
 
             foreach (var command in commands.Where(x => CommandCategorySettings.ContainsKey(x.Category) && CommandCategorySettings[x.Category].Show))
             {
-                if (!organisedCommands.ContainsKey(command.Category))
-                    organisedCommands.Add(command.Category, new List<CommandHelp>());
+                if (!categorisedCommands.ContainsKey(command.Category))
+                    categorisedCommands.Add(command.Category, new List<CommandHelp>());
 
-                organisedCommands[command.Category].Add(command);
+                categorisedCommands[command.Category].Add(command);
             }
 
-            foreach (var category in organisedCommands.Keys.OrderBy(x => CommandCategorySettings[x].Order))
-                foreach (var command in organisedCommands[category].OrderBy(x => x.Command))
-                    buttons.Add(new ButtonTemplate(command.Command, "btn btn-primary", $"background: {CommandCategorySettings[command.Category].HtmlColor};", EventCallback.Factory.Create(this, () => CommandButtonClicked(command))));
-
-            await InvokeAsync(StateHasChanged);
+            await CreateCommandButtons();
         }
 
         /// <summary>
@@ -109,10 +106,11 @@ namespace NetAF.Blazor.Components
             selectedCommand = null;
         }
 
-        private void ClearButtonClicked()
+        private async void ClearButtonClicked()
         {
+            buttons.Clear();
             selectedCommand = null;
-            UpdateCommands(commands);
+            await CreateCommandButtons();
         }
         
         private void CommandButtonClicked(CommandHelp commandHelp)
