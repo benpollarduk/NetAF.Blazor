@@ -26,13 +26,11 @@ Besides the generated content the page displays a simple acknowledge button and 
 The game itself is executed as a background task.
 
 ```
-@page "/"
+﻿@page "/"
 @using NetAF.Assets
 @using NetAF.Blazor.Components
 @using NetAF.Rendering.FrameBuilders
 @using NetAF.Targets.Html
-@using NetAF.Targets.Html.Rendering
-@using NetAF.Targets.Html.Rendering.FrameBuilders
 
 <PageTitle>NetAF</PageTitle>
 
@@ -52,21 +50,7 @@ The game itself is executed as a background task.
         HtmlAdapter htmlAdapter = new(gameComponent);
         gameComponent?.SetAdapter(htmlAdapter);
 
-        var htmlBuilder = new HtmlBuilder();
-
-        FrameBuilderCollection frameBuilderCollection = new(
-            new HtmlTitleFrameBuilder(htmlBuilder),
-            new HtmlSceneFrameBuilder(htmlBuilder, new HtmlRoomMapBuilder(htmlBuilder)),
-            new HtmlRegionMapFrameBuilder(htmlBuilder, new HtmlRegionMapBuilder(htmlBuilder) ),
-            new HtmlCommandListFrameBuilder(htmlBuilder),
-            new HtmlHelpFrameBuilder(htmlBuilder),
-            new HtmlCompletionFrameBuilder(htmlBuilder),
-            new HtmlGameOverFrameBuilder(htmlBuilder),
-            new HtmlAboutFrameBuilder(htmlBuilder),
-            new HtmlReactionFrameBuilder(htmlBuilder),
-            new HtmlConversationFrameBuilder(htmlBuilder));
-
-        GameConfiguration configuration = new(htmlAdapter, frameBuilderCollection, new Size(50, 30));
+        GameConfiguration configuration = new(htmlAdapter, FrameBuilderCollections.Html, new Size(50, 30));
         GameExecutor.Execute(ExampleGame.Create(configuration));
 
         await InvokeAsync(StateHasChanged);
