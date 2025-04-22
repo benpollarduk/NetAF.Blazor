@@ -27,37 +27,19 @@ The game itself is executed as a background task.
 
 ```
 @page "/"
-@using NetAF.Logic.Modes
+@using NetAF.Assets
+@using NetAF.Blazor.Components
 @using NetAF.Rendering.FrameBuilders
-@implements IFramePresenter
-@rendermode @(new InteractiveServerRenderMode(prerender:false))
+@using NetAF.Targets.Html
+@using NetAF.Targets.Html.Rendering
+@using NetAF.Targets.Html.Rendering.FrameBuilders
 
 <PageTitle>NetAF</PageTitle>
 
-<div>
-    @((MarkupString)frameAsHtml)
-</div>
-
-<br />
-
-@if (showInput)
-{
-    <input type="text" @ref="textInput" @bind="text" @onkeyup="HandleInput" />
-}
-
-@if (showAcknowledge)
-{
-    <button class="btn btn-primary" @ref="acknowledgeButton" @onclick="Acknowledge">OK</button>
-}
+<GameComponent @ref="gameComponent" />
 
 @code {
-    private HtmlAdapter? htmlAdapter;
-    private string frameAsHtml = string.Empty;
-    private string text = string.Empty;
-    private bool showInput = false;
-    private bool showAcknowledge = false;
-    private ElementReference acknowledgeButton;
-    private ElementReference textInput;
+    private GameComponent? gameComponent;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -67,42 +49,31 @@ The game itself is executed as a background task.
         if (GameExecutor.IsExecuting)
             GameExecutor.CancelExecution();
 
-        htmlAdapter = new HtmlAdapter(this);
-        GameConfiguration configuration = new(htmlAdapter, FrameBuilderCollections.Html, new(80, 50));
+        HtmlAdapter htmlAdapter = new(gameComponent);
+        gameComponent?.SetAdapter(htmlAdapter);
+
+        var htmlBuilder = new HtmlBuilder();
+
+        FrameBuilderCollection frameBuilderCollection = new(
+            new HtmlTitleFrameBuilder(htmlBuilder),
+            new HtmlSceneFrameBuilder(htmlBuilder, new HtmlRoomMapBuilder(htmlBuilder)),
+            new HtmlRegionMapFrameBuilder(htmlBuilder, new HtmlRegionMapBuilder(htmlBuilder) ),
+            new HtmlCommandListFrameBuilder(htmlBuilder),
+            new HtmlHelpFrameBuilder(htmlBuilder),
+            new HtmlCompletionFrameBuilder(htmlBuilder),
+            new HtmlGameOverFrameBuilder(htmlBuilder),
+            new HtmlAboutFrameBuilder(htmlBuilder),
+            new HtmlReactionFrameBuilder(htmlBuilder),
+            new HtmlConversationFrameBuilder(htmlBuilder));
+
+        GameConfiguration configuration = new(htmlAdapter, frameBuilderCollection, new Size(50, 30));
         GameExecutor.Execute(ExampleGame.Create(configuration));
-        await InvokeAsync(StateHasChanged);
-    }
-
-    private void Acknowledge()
-    {
-        GameExecutor.Update();
-    }
-
-    private void HandleInput(KeyboardEventArgs e)
-    {
-        if (e.Key == "Enter" && !string.IsNullOrWhiteSpace(text))
-        {
-            GameExecutor.Update(text);
-            text = string.Empty;
-        }
-    }
-
-    public async void Present(string frame)
-    {
-        frameAsHtml = frame;
-        showInput = htmlAdapter?.Game?.Mode?.Type == GameModeType.Interactive;
-        showAcknowledge = htmlAdapter?.Game?.Mode?.Type == GameModeType.Information;
 
         await InvokeAsync(StateHasChanged);
-
-        if (showInput && textInput.Context != null)
-            await textInput.FocusAsync();
-
-        if (showAcknowledge && acknowledgeButton.Context != null)
-            await acknowledgeButton.FocusAsync();
     }
 }
 ```
+
 ### Example Game
 The [ExampleGame](NetAF.Blazor/ExampleGame.cs) is included in the repo.
 

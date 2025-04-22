@@ -66,8 +66,8 @@ Simply add the **GameComponent** to your page and then set up and start a game.
 
         FrameBuilderCollection frameBuilderCollection = new(
             new HtmlTitleFrameBuilder(htmlBuilder),
-            new HtmlSceneFrameBuilder(htmlBuilder, new HtmlRoomMapBuilder(htmlBuilder) { MaxSize = new(50, 7) }),
-            new HtmlRegionMapFrameBuilder(htmlBuilder, new HtmlRegionMapBuilder(htmlBuilder) { MaxSize = new(50, 30) }),
+            new HtmlSceneFrameBuilder(htmlBuilder, new HtmlRoomMapBuilder(htmlBuilder)),
+            new HtmlRegionMapFrameBuilder(htmlBuilder, new HtmlRegionMapBuilder(htmlBuilder) ),
             new HtmlCommandListFrameBuilder(htmlBuilder),
             new HtmlHelpFrameBuilder(htmlBuilder),
             new HtmlCompletionFrameBuilder(htmlBuilder),
@@ -76,13 +76,14 @@ Simply add the **GameComponent** to your page and then set up and start a game.
             new HtmlReactionFrameBuilder(htmlBuilder),
             new HtmlConversationFrameBuilder(htmlBuilder));
 
-        GameConfiguration configuration = new(htmlAdapter, frameBuilderCollection, new(50, 30));
+        GameConfiguration configuration = new(htmlAdapter, frameBuilderCollection, new Size(50, 30));
         GameExecutor.Execute(ExampleGame.Create(configuration));
 
         await InvokeAsync(StateHasChanged);
     }
 }
 ```
+
 ### Example Game
 The [ExampleGame](NetAF.Blazor.Example/ExampleGame.cs) is included in the repo.
 
