@@ -115,7 +115,7 @@ namespace NetAF.Blazor.Components
         
         private void CommandButtonClicked(CommandHelp commandHelp)
         {
-            var prompts = htmlAdapter?.Game?.GetPromptsForCommand(commandHelp);
+            var prompts = GameExecutor.ExecutingGame?.GetPromptsForCommand(commandHelp);
 
             if (prompts?.Any() ?? false)
             {

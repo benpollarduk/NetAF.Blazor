@@ -36,11 +36,11 @@ namespace NetAF.Blazor.Components
 
         private async void DownloadRestorePoint()
         {
-            if (htmlAdapter?.Game == null)
+            if (GameExecutor.ExecutingGame == null)
                 return;
 
-            var name = $"restore-{(htmlAdapter.Game?.Overworld?.CurrentRegion?.CurrentRoom?.Identifier.Name ?? "start")}".ToLower().Replace(' ', '-');
-            var restorePoint = RestorePoint.Create(name, htmlAdapter.Game);
+            var name = $"restore-{(GameExecutor.ExecutingGame?.Overworld?.CurrentRegion?.CurrentRoom?.Identifier.Name ?? "start")}".ToLower().Replace(' ', '-');
+            var restorePoint = RestorePoint.Create(name, GameExecutor.ExecutingGame);
             var serialisation = JsonSave.ToJson(restorePoint);
             await JSRuntime.InvokeVoidAsync("saveAsFile", $"{name}.json", serialisation);
         }
@@ -49,7 +49,7 @@ namespace NetAF.Blazor.Components
         {
             try
             {
-                var game = htmlAdapter?.Game;
+                var game = GameExecutor.ExecutingGame;
 
                 if (game == null)
                     return;
@@ -75,7 +75,7 @@ namespace NetAF.Blazor.Components
         /// </summary>
         internal async void Update()
         {
-            show = htmlAdapter?.Game?.Mode?.Type == GameModeType.Interactive;
+            show = GameExecutor.ExecutingGame?.Mode?.Type == GameModeType.Interactive;
             await InvokeAsync(StateHasChanged);
         }
 

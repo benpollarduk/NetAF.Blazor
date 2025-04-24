@@ -41,9 +41,9 @@ namespace NetAF.Blazor.Components
         
         private async void UpdateInputMode()
         {
-            showInput = (htmlAdapter?.Game?.Mode?.Type == GameModeType.Interactive) && (selectedInputMode == InputMode.Text);
-            showCommandPicker = (htmlAdapter?.Game?.Mode?.Type == GameModeType.Interactive) && (selectedInputMode == InputMode.List);
-            showAcknowledge = htmlAdapter?.Game?.Mode?.Type == GameModeType.Information;
+            showInput = (GameExecutor.ExecutingGame?.Mode?.Type == GameModeType.Interactive) && (selectedInputMode == InputMode.Text);
+            showCommandPicker = (GameExecutor.ExecutingGame?.Mode?.Type == GameModeType.Interactive) && (selectedInputMode == InputMode.List);
+            showAcknowledge = GameExecutor.ExecutingGame?.Mode?.Type == GameModeType.Information;
 
             await InvokeAsync(StateHasChanged);
         }
@@ -57,9 +57,9 @@ namespace NetAF.Blazor.Components
 
             await InvokeAsync(StateHasChanged);
 
-            if (htmlAdapter?.Game?.Mode?.Type == GameModeType.Interactive)
+            if (GameExecutor.ExecutingGame?.Mode?.Type == GameModeType.Interactive)
             {
-                var commands = htmlAdapter?.Game?.GetContextualCommands()?.ToArray() ?? [];
+                var commands = GameExecutor.ExecutingGame?.GetContextualCommands()?.ToArray() ?? [];
                 CommandPickerComponent?.UpdateCommands(commands);
             }
 
