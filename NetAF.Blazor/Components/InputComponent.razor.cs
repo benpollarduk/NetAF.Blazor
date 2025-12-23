@@ -43,7 +43,7 @@ namespace NetAF.Blazor.Components
         {
             showInput = (GameExecutor.ExecutingGame?.Mode?.Type == GameModeType.Interactive) && (selectedInputMode == InputMode.Text);
             showCommandPicker = (GameExecutor.ExecutingGame?.Mode?.Type == GameModeType.Interactive) && (selectedInputMode == InputMode.List);
-            showAcknowledge = GameExecutor.ExecutingGame?.Mode?.Type == GameModeType.Information;
+            showAcknowledge = GameExecutor.ExecutingGame?.Mode?.Type is GameModeType.SingleFrameInformation or GameModeType.MultipleFrameInformation;
 
             await InvokeAsync(StateHasChanged);
         }
