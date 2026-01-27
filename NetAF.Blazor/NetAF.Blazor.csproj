@@ -26,14 +26,13 @@
     <None Remove="wwwroot\**" />
   </ItemGroup>
 
-
   <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.1" />
-    <PackageReference Include="NetAF" Version="3.9.1" />
+    <PackageReference Include="NetAF" Version="3.10.7" />
   </ItemGroup>
     
   <ItemGroup>
