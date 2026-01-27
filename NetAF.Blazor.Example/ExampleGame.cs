@@ -2,12 +2,11 @@
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Logic;
-using NetAF.Logic.Callbacks;
 using NetAF.Utilities;
 
 namespace NetAF.Blazor.Example
 {
-    internal class ExampleGame
+    internal static class ExampleGame
     {
         internal static GameCreator Create(GameConfiguration configuration)
         {
