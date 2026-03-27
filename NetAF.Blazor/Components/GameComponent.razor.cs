@@ -45,6 +45,15 @@ namespace NetAF.Blazor.Components
         }
 
         /// <summary>
+        /// Present an updated frame.
+        /// </summary>
+        /// <param name="frame">The udated frame to write, as a string.</param>
+        public void PresentUpdate(string frame)
+        {
+            Present(frame);
+        }
+
+        /// <summary>
         /// Get the size of the presentable area.
         /// </summary>
         /// <returns>The size.</returns>
